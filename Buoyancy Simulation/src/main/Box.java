@@ -25,11 +25,11 @@ public class Box {
 	}
 	
 	public void update(int dt) {
-		float fnet = 0;
+		float netForce = 0;
 		for (float force : forces)
-			fnet += force;
+			netForce += force;
 		
-		vy += (fnet / mass) * (dt / 1000f);
+		vy += (netForce / mass) * (dt / 1000f);
 		
 		if (y + height >= parent.height) {
 			vy = 0;
