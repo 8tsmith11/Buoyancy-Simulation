@@ -6,12 +6,11 @@ public class Box {
 	private PApplet parent;
 	private float width, height, volume;
 	private float density, mass;
-	private float x, y;
+	private float y;
 	private float vy;
 	private float[] forces;
 	
-	public Box(PApplet parent, float x, float y, float width, float height, float density) {
-		this.x = x;
+	public Box(PApplet parent, float y, float width, float height, float density) {
 		this.y = y;
 		this.parent = parent;
 		this.width = width;
@@ -22,6 +21,11 @@ public class Box {
 		vy = 0;
 		forces = new float[2];
 		forces[0] = Simulation.GRAVITY * mass;
+		
+		System.out.println("New Box Created");
+		System.out.println("Volume: " + volume);
+		System.out.println("Mass: " + mass);
+		System.out.println("Density: " + density);
 	}
 	
 	public void update(int dt) {
@@ -31,18 +35,20 @@ public class Box {
 		
 		vy += (netForce / mass) * (dt / 1000f);
 		
-		if (y + height >= parent.height) {
+		if (y < 0) {
 			vy = 0;
-			y = parent.height - height;
+			y = 0;
 		}
-		y += vy;
 		
-		draw();
+		y += vy * (dt / 1000f);
 	}
 	
 	public void draw() {
+		parent.stroke(0);
 		parent.fill(255, 0, 0);
-		parent.rect(x, y, width, height);
+		float drawX = parent.width / 2 - (width * Simulation.SCALE) / 2;
+		float drawY = parent.height - ((y + height) * Simulation.SCALE);
+		parent.rect(drawX, drawY, width * Simulation.SCALE, height * Simulation.SCALE);
 	}
 	
 	public float getY() { return y; }
