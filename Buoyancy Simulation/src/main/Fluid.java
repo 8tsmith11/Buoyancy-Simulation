@@ -13,7 +13,7 @@ public class Fluid {
 		this.density = density;
 	}
 	
-	public void applyForce(Box box) {
+	public void applyForces(Box box) {
 		float volume;
 		
 		if (box.getY() + box.getHeight() <= height) {

@@ -6,12 +6,15 @@ public class Box {
 	private PApplet parent;
 	private float width, height, volume;
 	private float density, mass;
-	private float y;
+	private float x, y;
 	private float vy;
 	private float[] forces;
 	private float baseArea;
 	
-	public Box(PApplet parent, float y, float width, float height, float density) {
+	private static float DRAGCOEFFICIENT = 1.05f;
+	
+	public Box(PApplet parent, float x, float y, float width, float height, float density) {
+		this.x = x;
 		this.y = y;
 		this.parent = parent;
 		this.width = width;
@@ -48,12 +51,14 @@ public class Box {
 	public void draw() {
 		parent.stroke(0);
 		parent.fill(255, 0, 0);
-		float drawX = parent.width / 2 - (width * Simulation.SCALE) / 2;
+		float drawX = x * Simulation.SCALE;
 		float drawY = parent.height - ((y + height) * Simulation.SCALE);
 		parent.rect(drawX, drawY, width * Simulation.SCALE, height * Simulation.SCALE);
 	}
 	
+	public float getX() { return x; }
 	public float getY() { return y; }
+	public float getWidth() { return width; }
 	public float getHeight() { return height; }
 	public float getVolume() { return volume; }
 	
@@ -62,6 +67,12 @@ public class Box {
 	}
 	
 	public void applyDragForce(float density) {
-		forces[2] = -vy * vy * 0.525f * density * baseArea;
+		forces[2] = -vy * Math.abs(vy) * 0.5f * density * baseArea * DRAGCOEFFICIENT;
+	}
+	
+	public void move(float dx, float dy) {
+		x += dx;
+		y += dy;
+		vy = 0;
 	}
 }
