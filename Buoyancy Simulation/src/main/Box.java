@@ -9,6 +9,7 @@ public class Box {
 	private float y;
 	private float vy;
 	private float[] forces;
+	private float baseArea;
 	
 	public Box(PApplet parent, float y, float width, float height, float density) {
 		this.y = y;
@@ -19,8 +20,9 @@ public class Box {
 		this.density = density;
 		mass = volume * density;
 		vy = 0;
-		forces = new float[2];
+		forces = new float[3];
 		forces[0] = Simulation.GRAVITY * mass;
+		baseArea = width * width;
 		
 		System.out.println("New Box Created");
 		System.out.println("Volume: " + volume);
@@ -57,5 +59,9 @@ public class Box {
 	
 	public void applyBuoyantForce(float force) {
 		forces[1] = force;
+	}
+	
+	public void applyDragForce(float density) {
+		forces[2] = -vy * vy * 0.525f * density * baseArea;
 	}
 }

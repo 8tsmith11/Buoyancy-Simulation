@@ -18,12 +18,14 @@ public class Fluid {
 		
 		if (box.getY() + box.getHeight() <= height) {
 			volume = box.getVolume();
+			box.applyDragForce(density);
 		}
 		else if (box.getY() >= height)
 			volume = 0;
 		else {
 			float portionSubmerged = (height - box.getY()) / box.getHeight();
 			volume = portionSubmerged * box.getVolume();
+			box.applyDragForce(density);
 		}
 		
 		box.applyBuoyantForce(density * volume * -Simulation.GRAVITY);
