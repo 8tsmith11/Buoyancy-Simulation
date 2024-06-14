@@ -1,6 +1,7 @@
 package main;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Box {
 	private PApplet parent;
@@ -10,10 +11,12 @@ public class Box {
 	private float vy;
 	private float[] forces;
 	private float baseArea;
+	private PImage image;
 	
 	private static float DRAGCOEFFICIENT = 1.05f;
 	
-	public Box(PApplet parent, float x, float y, float width, float height, float density) {
+	public Box(PApplet parent, PImage image, float x, float y, float width, float height, float density) {
+		this.image = image;
 		this.x = x;
 		this.y = y;
 		this.parent = parent;
@@ -46,14 +49,21 @@ public class Box {
 		}
 		
 		y += vy * (dt / 1000f);
+		
+		System.out.println("Weight: " + forces[0]);
+		System.out.println("Buoyancy: " + forces[1]);
+		System.out.println("Drag: " + forces[2]);
+		System.out.println("Acceleration: " + netForce / mass);
+		System.out.println("dt: " + dt);
 	}
 	
 	public void draw() {
-		parent.stroke(0);
-		parent.fill(255, 0, 0);
+		//parent.stroke(0);
+		//parent.fill(255, 0, 0);
 		float drawX = x * Simulation.SCALE;
 		float drawY = parent.height - ((y + height) * Simulation.SCALE);
-		parent.rect(drawX, drawY, width * Simulation.SCALE, height * Simulation.SCALE);
+		parent.image(image, drawX, drawY, width * Simulation.SCALE, height * Simulation.SCALE);
+		//parent.rect(drawX, drawY, width * Simulation.SCALE, height * Simulation.SCALE);
 	}
 	
 	public float getX() { return x; }
@@ -74,5 +84,14 @@ public class Box {
 		x += dx;
 		y += dy;
 		vy = 0;
+	}
+	
+	public void setDimensions(float width, float height) {
+		this.width = width;
+		this.height = height;
+		volume = width * width * height;
+		mass = volume * density;
+		baseArea = width * width;
+		forces[0] = Simulation.GRAVITY * mass;
 	}
 }

@@ -16,12 +16,15 @@ public class Fluid {
 	public void applyForces(Box box) {
 		float volume;
 		
-		if (box.getY() + box.getHeight() <= height) {
+		if (box.getY() >= height || height == 0) {
+			volume = 0;
+			box.applyDragForce(0);
+		}
+		
+		else if (box.getY() + box.getHeight() <= height) {
 			volume = box.getVolume();
 			box.applyDragForce(density);
 		}
-		else if (box.getY() >= height)
-			volume = 0;
 		else {
 			float portionSubmerged = (height - box.getY()) / box.getHeight();
 			volume = portionSubmerged * box.getVolume();
@@ -35,5 +38,9 @@ public class Fluid {
 		parent.noStroke();
 		parent.fill(20, 100, 230, 150);
 		parent.rect(0, parent.height - (height * Simulation.SCALE), parent.width, parent.height);
+	}
+	
+	public void setDepth(float depth) {
+		height = depth;
 	}
 }
