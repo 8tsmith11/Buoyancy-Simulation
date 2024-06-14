@@ -53,4 +53,6 @@ public class Fluid {
 	public void setColor(int color) {
 		this.color = color;
 	}
+	
+	public float getDensity() { return density; }
 }

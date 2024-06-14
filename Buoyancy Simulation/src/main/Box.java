@@ -71,13 +71,17 @@ public class Box {
 	public float getWidth() { return width; }
 	public float getHeight() { return height; }
 	public float getVolume() { return volume; }
+	public float getDensity() { return density; }
+	public float getMass() { return mass; }
+	public float[] getForces() { return forces; }
+	public float getVelocity() { return vy; }
 	
 	public void applyBuoyantForce(float force) {
 		forces[1] = force;
 	}
 	
-	public void applyDragForce(float density) {
-		forces[2] = -vy * Math.abs(vy) * 0.5f * density * baseArea * DRAGCOEFFICIENT;
+	public void applyDragForce(float fluidDensity) {
+		forces[2] = -vy * Math.abs(vy) * 0.5f * fluidDensity * baseArea * DRAGCOEFFICIENT;
 	}
 	
 	public void move(float dx, float dy) {

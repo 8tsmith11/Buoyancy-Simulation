@@ -18,6 +18,16 @@ public class Simulation extends PApplet {
 	private Slider widthSlider;
 	private Slider heightSlider;
 	private Slider depthSlider;
+	
+	private Button waterButton;
+	private Button honeyButton;
+	private Button oilButton;
+	private Button mercuryButton;
+	
+	private Button cedarButton;
+	private Button steelButton;
+	private Button iceButton;
+	private Button rubberButton;
 
 	public static void main(String[] args) {
 		PApplet.main("main.Simulation");
@@ -42,6 +52,19 @@ public class Simulation extends PApplet {
 		widthSlider.setValue(1);
 		heightSlider.setValue(1);
 		depthSlider.setValue(3);
+		setupUI();
+	}
+	
+	private void setupUI() {
+		waterButton = new Button(this, width * 0.2f, height * 0.1f, width * 0.05f, "Water", "Circle", true);
+		honeyButton = new Button(this, width * 0.3f, height * 0.1f, width * 0.05f, "Honey", "Circle", false);
+		oilButton = new Button(this, width * 0.4f, height * 0.1f, width * 0.05f, "Oil", "Circle", false);
+		mercuryButton = new Button(this, width * 0.5f, height * 0.1f, width * 0.05f, "Mercury", "Circle", false);
+		
+		cedarButton = new Button(this, width * 0.2f, height * 0.22f, width * 0.05f, "Cedar", "Circle", true);
+		steelButton = new Button(this, width * 0.3f, height * 0.22f, width * 0.05f, "Steel", "Circle", false);
+		iceButton = new Button(this, width * 0.4f, height * 0.22f, width * 0.05f, "Ice", "Circle", false);
+		rubberButton = new Button(this, width * 0.5f, height * 0.22f, width * 0.05f, "Rubber", "Circle", false);
 	}
 	
 	public void draw() {
@@ -59,6 +82,7 @@ public class Simulation extends PApplet {
 		box.draw();
 		fluid.draw();
 		handleUI();
+		drawData();
 		lastMillis = millis;
 	}
 	
@@ -71,6 +95,29 @@ public class Simulation extends PApplet {
 			fluid.setDepth(depthSlider.getValue());
 		}
 		
+//		waterButton.draw();
+//		honeyButton.draw();
+//		oilButton.draw();
+//		mercuryButton.draw();
+//		cedarButton.draw();
+//		iceButton.draw();
+//		steelButton.draw();
+//		rubberButton.draw();
+		
+
+	}
+	
+	private void drawData() {
+		fill(220);
+		textSize(20);
+		textAlign(LEFT, CENTER);
+		text("Fluid Density: " + fluid.getDensity() + " kg/m^3", width * 0.8f, 50);
+		text("Box Density: " + box.getDensity() + " kg/m^3", width * 0.8f, 70);
+		text("Box Mass: " + box.getMass() + " kg", width * 0.8f, 90);
+		text("Force of Gravity: " + box.getForces()[0] + " N", width * 0.8f, 110);
+		text("Buoyant Force: " + box.getForces()[1] + " N", width * 0.8f, 130);
+		text("Drag Force: " + box.getForces()[2] + " N", width * 0.8f, 150);
+		text("Velocity: " + box.getVelocity() + " m/s", width * 0.8f, 170);
 	}
 	
 	public void dragBox() {
@@ -83,13 +130,49 @@ public class Simulation extends PApplet {
 		if (mouseX >= box.getX() * SCALE && mouseX <= (box.getX() + box.getWidth()) * SCALE
 				&& mouseY >= height - ((box.getY() + box.getHeight()) * SCALE) && mouseY <= height - ((box.getY()) * SCALE))
 			dragging = true;
+		
+		waterButton.mouseClicked();
+		oilButton.mouseClicked();
+		honeyButton.mouseClicked();
+		mercuryButton.mouseClicked();
+		iceButton.mouseClicked();
+		cedarButton.mouseClicked();
+		steelButton.mouseClicked();
+		rubberButton.mouseClicked();
+		
+		if (waterButton.getValue()) {
+			honeyButton.clearClick();
+			oilButton.clearClick();
+			mercuryButton.clearClick();
+			changeFluid("Water");
+		}
+		else if (honeyButton.getValue()) {
+			waterButton.clearClick();
+			oilButton.clearClick();
+			mercuryButton.clearClick();
+			changeFluid("Honey");
+		}
+		else if (oilButton.getValue()) {
+			honeyButton.clearClick();
+			waterButton.clearClick();
+			mercuryButton.clearClick();
+			changeFluid("Oil");
+		}
+		else if (mercuryButton.getValue()) {
+			honeyButton.clearClick();
+			oilButton.clearClick();
+			waterButton.clearClick();
+			changeFluid("Mercury");
+		}
 	}
 	
 	public void mouseReleased() {
 		dragging = false;
+		box.setDimensions(widthSlider.getValue(), heightSlider.getValue());
+		fluid.setDepth(depthSlider.getValue());
 	}
 	
-	public int getFluidColor(String material) {
+	private int getFluidColor(String material) {
 		if (material.equals("Water"))
 			return color(20, 100, 230, 150);
 		else if (material.equals("Oil"))
@@ -97,7 +180,7 @@ public class Simulation extends PApplet {
 		return color(0);
 	}
 	
-	public float getDensity(String material) {
+	private float getDensity(String material) {
 		if (material.equals("Cedar"))
 			return 400;
 		else if (material.equals("Water"))
@@ -109,12 +192,22 @@ public class Simulation extends PApplet {
 		return 1000;
 	}
 	
-	public PImage getSolidImage(String material) {
+	private PImage getSolidImage(String material) {
 		if (material.equals("Cedar"))
 			return loadImage("images/cedar.jpg");
 		else if (material.equals("Steel"))
 			return loadImage("images/steel.png");
 		
 		return null;
+	}
+	
+	private void changeSolid(String material) {
+		box.setImage(getSolidImage(material));
+		box.setDensity(getDensity(material));
+	}
+	
+	private void changeFluid(String material) {
+		fluid.setDensity(getDensity(material));
+		fluid.setColor(getFluidColor(material));
 	}
 }

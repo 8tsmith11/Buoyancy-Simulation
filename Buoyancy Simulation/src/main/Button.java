@@ -6,33 +6,28 @@ import processing.core.PConstants;
 public class Button {
 
 	private PApplet parent;
-	private int x, y, size;
+	private float x, y, size;
 	private String name;
 	private String shape;
-	private String type;
 	private boolean pressed;
 	
-	public Button(PApplet parent, int x, int y, int size, String name, String shape, String type, boolean pressed) {
+	public Button(PApplet parent, float x, float y, float size, String name, String shape, boolean pressed) {
 		this.parent = parent;
 		this.size = size;
 		this.name = name;
 		this.shape = shape;
 		if(shape.equals("Circle")) {
-			this.x = x+size/2;
-			this.y = y+size/2;
+			this.x = x+size/2f;
+			this.y = y+size/2f;
 		}else {
 			this.x = x;
 			this.y = y;
 		}
 		
-		this.type = type;
-		
 		this.pressed = pressed;
 	}
 	
 	public boolean getValue() {return pressed;}
-	
-	public String getType() {return type;}
 	
 	public void setValue(boolean pressed) {this.pressed = pressed;}
 	
@@ -72,12 +67,13 @@ public class Button {
 	}
 	
 	public void drawCircle() {
+		parent.fill(255);
 		parent.ellipse(x, y, size, size);
 		if(pressed) {
 			parent.fill(0);
-			parent.ellipse(x, y, size-10, size-10);
-			parent.fill(255);
+			parent.ellipse(x, y, size-30, size-30);
 		}
+		parent.fill(220);
 		parent.text(name, x, (y-size/2) - 8);
 	}
 	

@@ -23,6 +23,7 @@ public class Axes {
 	public void draw() {
 		parent.noStroke();
 		parent.fill(220);
+		parent.textSize(15);
 		parent.textAlign(parent.CENTER);
 		drawX();
 		drawY();
