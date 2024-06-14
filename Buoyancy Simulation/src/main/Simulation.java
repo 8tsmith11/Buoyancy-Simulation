@@ -39,7 +39,7 @@ public class Simulation extends PApplet {
 	
 	public void setup() {
 		box = new Box(this, getSolidImage("Cedar"), width / 2 / SCALE - 0.5f, 8, 1f, 1f, getDensity("Cedar"));
-		fluid = new Fluid(this, getFluidColor("Honey"), 3, getDensity("Honey"));
+		fluid = new Fluid(this, getFluidColor("Water"), 3, getDensity("Water"));
 		axes = new Axes(this, 1);
 		dragging = false;
 		
@@ -131,39 +131,39 @@ public class Simulation extends PApplet {
 				&& mouseY >= height - ((box.getY() + box.getHeight()) * SCALE) && mouseY <= height - ((box.getY()) * SCALE))
 			dragging = true;
 		
-		waterButton.mouseClicked();
-		oilButton.mouseClicked();
-		honeyButton.mouseClicked();
-		mercuryButton.mouseClicked();
-		iceButton.mouseClicked();
-		cedarButton.mouseClicked();
-		steelButton.mouseClicked();
-		rubberButton.mouseClicked();
-		
-		if (waterButton.getValue()) {
-			honeyButton.clearClick();
-			oilButton.clearClick();
-			mercuryButton.clearClick();
-			changeFluid("Water");
-		}
-		else if (honeyButton.getValue()) {
-			waterButton.clearClick();
-			oilButton.clearClick();
-			mercuryButton.clearClick();
-			changeFluid("Honey");
-		}
-		else if (oilButton.getValue()) {
-			honeyButton.clearClick();
-			waterButton.clearClick();
-			mercuryButton.clearClick();
-			changeFluid("Oil");
-		}
-		else if (mercuryButton.getValue()) {
-			honeyButton.clearClick();
-			oilButton.clearClick();
-			waterButton.clearClick();
-			changeFluid("Mercury");
-		}
+//		waterButton.mouseClicked();
+//		oilButton.mouseClicked();
+//		honeyButton.mouseClicked();
+//		mercuryButton.mouseClicked();
+//		iceButton.mouseClicked();
+//		cedarButton.mouseClicked();
+//		steelButton.mouseClicked();
+//		rubberButton.mouseClicked();
+//		
+//		if (waterButton.getValue()) {
+//			honeyButton.clearClick();
+//			oilButton.clearClick();
+//			mercuryButton.clearClick();
+//			changeFluid("Water");
+//		}
+//		else if (honeyButton.getValue()) {
+//			waterButton.clearClick();
+//			oilButton.clearClick();
+//			mercuryButton.clearClick();
+//			changeFluid("Honey");
+//		}
+//		else if (oilButton.getValue()) {
+//			honeyButton.clearClick();
+//			waterButton.clearClick();
+//			mercuryButton.clearClick();
+//			changeFluid("Oil");
+//		}
+//		else if (mercuryButton.getValue()) {
+//			honeyButton.clearClick();
+//			oilButton.clearClick();
+//			waterButton.clearClick();
+//			changeFluid("Mercury");
+//		}
 	}
 	
 	public void mouseReleased() {
