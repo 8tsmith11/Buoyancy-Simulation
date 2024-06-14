@@ -6,8 +6,10 @@ public class Fluid {
 	private PApplet parent;
 	private float density;
 	private float height;
+	private int color;
 	
-	public Fluid(PApplet parent, float height, float density) {
+	public Fluid(PApplet parent, int color, float height, float density) {
+		this.color = color;
 		this.parent = parent;
 		this.height = height;
 		this.density = density;
@@ -36,11 +38,19 @@ public class Fluid {
 	
 	public void draw() {
 		parent.noStroke();
-		parent.fill(20, 100, 230, 150);
+		parent.fill(color);
 		parent.rect(0, parent.height - (height * Simulation.SCALE), parent.width, parent.height);
 	}
 	
 	public void setDepth(float depth) {
 		height = depth;
+	}
+	
+	public void setDensity(float density) {
+		this.density = density;
+	}
+	
+	public void setColor(int color) {
+		this.color = color;
 	}
 }

@@ -94,4 +94,14 @@ public class Box {
 		baseArea = width * width;
 		forces[0] = Simulation.GRAVITY * mass;
 	}
+	
+	public void setDensity(float density) {
+		this.density = density;
+		mass = volume * density;
+		forces[0] = Simulation.GRAVITY * mass;
+	}
+	
+	public void setImage(PImage image) {
+		this.image = image;
+	}
 }

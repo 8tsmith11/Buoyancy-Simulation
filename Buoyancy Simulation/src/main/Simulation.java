@@ -28,8 +28,8 @@ public class Simulation extends PApplet {
 	}
 	
 	public void setup() {
-		box = new Box(this, getSolidImage("Cedar"), width / 2 / SCALE - 0.5f, 8, 1f, 1f, 900f);
-		fluid = new Fluid(this, 3, 997);
+		box = new Box(this, getSolidImage("Cedar"), width / 2 / SCALE - 0.5f, 8, 1f, 1f, getDensity("Cedar"));
+		fluid = new Fluid(this, getFluidColor("Water"), 3, getDensity("Water"));
 		axes = new Axes(this, 1);
 		dragging = false;
 		
@@ -71,7 +71,6 @@ public class Simulation extends PApplet {
 			fluid.setDepth(depthSlider.getValue());
 		}
 		
-		
 	}
 	
 	public void dragBox() {
@@ -90,17 +89,31 @@ public class Simulation extends PApplet {
 		dragging = false;
 	}
 	
-	public float getFluidColor(String fluid) {
-		return color(2);
+	public int getFluidColor(String material) {
+		if (material.equals("Water"))
+			return color(20, 100, 230, 150);
+		else if (material.equals("Oil"))
+			return color(20, 20, 20, 255);
+		return color(0);
 	}
 	
 	public float getDensity(String material) {
+		if (material.equals("Cedar"))
+			return 400;
+		else if (material.equals("Water"))
+			return 1000;
+		else if (material.equals("Oil"))
+			return 825;
+		else if (material.equals("Steel"))
+			return 7500;
 		return 1000;
 	}
 	
-	public PImage getSolidImage(String solid) {
-		if (solid.equals("Cedar"))
+	public PImage getSolidImage(String material) {
+		if (material.equals("Cedar"))
 			return loadImage("images/cedar.jpg");
+		else if (material.equals("Steel"))
+			return loadImage("images/steel.png");
 		
 		return null;
 	}
