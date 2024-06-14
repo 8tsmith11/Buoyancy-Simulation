@@ -39,7 +39,7 @@ public class Simulation extends PApplet {
 	
 	public void setup() {
 		box = new Box(this, getSolidImage("Cedar"), width / 2 / SCALE - 0.5f, 8, 1f, 1f, getDensity("Cedar"));
-		fluid = new Fluid(this, getFluidColor("Water"), 3, getDensity("Water"));
+		fluid = new Fluid(this, getFluidColor("Honey"), 3, getDensity("Honey"));
 		axes = new Axes(this, 1);
 		dragging = false;
 		
@@ -177,6 +177,8 @@ public class Simulation extends PApplet {
 			return color(20, 100, 230, 150);
 		else if (material.equals("Oil"))
 			return color(20, 20, 20, 255);
+		else if (material.equals("Honey"))
+			return color(231, 154, 63, 225);
 		return color(0);
 	}
 	
@@ -189,6 +191,8 @@ public class Simulation extends PApplet {
 			return 825;
 		else if (material.equals("Steel"))
 			return 7500;
+		else if (material.equals("Honey"))
+			return 1500;
 		return 1000;
 	}
 	
